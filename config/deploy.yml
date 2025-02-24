@@ -1,0 +1,38 @@
+<% require "dotenv"; Dotenv.load(".env") %>
+
+deploy_timeout: 60
+
+service: <%= ENV.fetch("SERVICE_NAME") %>
+
+image: <%= ENV.fetch("KAMAL_REGISTRY_IMAGE") %>
+
+servers:
+  web:
+    - <%= ENV.fetch("HOST_IP") %>
+
+env:
+  clear:
+    TEST_VALUE: helloworld
+
+proxy:
+  ssl: true
+  host: <%= ENV.fetch("HOST_DOMAIN") %>
+  # Proxy connects to your container on port 80 by default.
+  app_port: 3000
+
+registry:
+  username: <%= ENV.fetch("KAMAL_REGISTRY_USER") %>
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+ssh:
+  user: <%= ENV["SSH_USER"] %>
+
+builder:
+  arch: amd64
+  local: false
+  remote: <%= ENV.fetch("BUILDER_REMOTE") %>
+
+aliases:
+  shell: app exec --interactive --reuse "bash"
+  logs: app logs -f
