@@ -1,0 +1,28 @@
+name: Debug Shell
+
+on:
+  workflow_dispatch:
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install OpenSSH
+        run: sudo apt-get update && sudo apt-get install -y openssh-server
+
+      - name: Set up SSH keys
+        run: |
+          mkdir -p /home/runner/.ssh
+          echo "${{ secrets.SSH_PUBLIC_KEY }}" >> /home/runner/.ssh/authorized_keys
+          chmod 700 /home/runner/.ssh
+          chmod 600 /home/runner/.ssh/authorized_keys
+
+      - name: Start SSH server
+        run: |
+          sudo mkdir -p /var/run/sshd
+          sudo /usr/sbin/sshd -D &
+
+      - name: Keep runner alive
+        run: sleep 3600
