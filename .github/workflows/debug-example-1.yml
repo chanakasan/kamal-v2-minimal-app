@@ -1,0 +1,19 @@
+name: Debug Example 1
+
+on:
+  workflow_dispatch:
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up SSH access
+        uses: edipizarro/runner-open-ssh@main
+        with:
+          sshPublicKey: ${{ secrets.SSH_PUBLIC_KEY }}
+          gatewayPrivateKey: ${{ secrets.GATEWAY_PRIVATE_KEY }}
+          gatewayIP: ${{ secrets.GATEWAY_IP }}
+          maxLifeTime: 30
