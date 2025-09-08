@@ -16,4 +16,5 @@ jobs:
           sshPublicKey: ${{ secrets.SSH_PUBLIC_KEY }}
           gatewayPrivateKey: ${{ secrets.GATEWAY_PRIVATE_KEY }}
           gatewayIP: ${{ secrets.GATEWAY_IP }}
-          maxLifeTime: 30
+          gatewayUser: root
+          maxLifeTime: 1200
