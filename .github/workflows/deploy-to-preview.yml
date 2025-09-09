@@ -21,7 +21,13 @@ jobs:
           echo kamal version = $(kamal version)
       - name: Verify kamal config
         run: |
+          kamal config
+          echo "-------------------"
           kamal registry login
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Run kamal deploy
         run: |
           kamal deploy
