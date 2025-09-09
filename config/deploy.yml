@@ -30,7 +30,7 @@ ssh:
 
 builder:
   arch: amd64
-  local: false
+  local: <%= ENV["USER"] == "runner" ? true : false %>
   remote: <%= ENV.fetch("BUILDER_REMOTE") %>
 
 aliases:
