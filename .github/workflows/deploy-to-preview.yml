@@ -13,7 +13,7 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Create .env
         run: |
-          echo ${{ secrets.ENCODED_ENV_FILE }} > env.encoded
+          echo "${{ secrets.ENCODED_ENV_FILE }}" > env.encoded
           openssl base64 -d -in env.encoded > .env
       - name: Install kamal
         run: |
