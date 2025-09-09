@@ -1,0 +1,27 @@
+name: Deploy to preview server
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Create .env
+        run: |
+          echo ${{ secrets.ENCODED_ENV_FILE }} > env.encoded
+          openssl base64 -d -in env.encoded > .env
+      - name: Install kamal
+        run: |
+          sudo gem install kamal --no-document
+          kamal version
+      - name: Verify kamal config
+        run: |
+          kamal registry login
+      - name: Run kamal deploy
+        run: |
+          kamal deploy
