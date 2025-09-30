@@ -14,8 +14,8 @@ jobs:
       - name: Set up SSH access
         uses: edipizarro/runner-open-ssh@main
         with:
-          sshPublicKey: ${{ secrets.RUNNER_PUBLIC_KEY }}
+          sshPublicKey: ${{ secrets.GATEWAY_PUBLIC_KEY }}
           gatewayPrivateKey: ${{ secrets.RUNNER_PRIVATE_KEY }}
           gatewayIP: ${{ secrets.GATEWAY_IP }}
-          gatewayUser: root
+          gatewayUser: ${{ secrets.GATEWAY_USER }}
           maxLifeTime: 1200
