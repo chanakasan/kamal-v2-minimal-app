@@ -1,4 +1,4 @@
-name: Debug Example 1
+name: Create SSH Tunnel
 
 on:
   workflow_dispatch:
@@ -13,8 +13,8 @@ jobs:
       - name: Set up SSH access
         uses: edipizarro/runner-open-ssh@main
         with:
-          sshPublicKey: ${{ secrets.SSH_PUBLIC_KEY }}
-          gatewayPrivateKey: ${{ secrets.GATEWAY_PRIVATE_KEY }}
+          sshPublicKey: ${{ secrets.RUNNER_PUBLIC_KEY }}
+          gatewayPrivateKey: ${{ secrets.RUNNER_PRIVATE_KEY }}
           gatewayIP: ${{ secrets.GATEWAY_IP }}
           gatewayUser: root
           maxLifeTime: 1200
