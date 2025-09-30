@@ -1,0 +1,26 @@
+name: Run Experiments
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show runner IP
+        run: curl ifconfig.me; echo
+
+      - name: Create .env file
+        run: |
+          python3 - <<'PY'
+          import json, os
+          vars = json.loads('''${{ toJson(vars) }}''')
+          with open(".env", "w") as f:
+              for k, v in vars.items():
+                  f.write(f"{k}={v}\n")
+          PY
+      
+      - name: Show .env contents
+        run: cat .env
